@@ -1,0 +1,31 @@
+{
+  "basic_results": {
+    "health": {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+    },
+    "dataset": {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+    },
+    "fraud_info": {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+    },
+    "model_status": {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+    }
+  },
+  "training_result": {
+    "success": false,
+    "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+  },
+  "summary": {
+    "total_tests": 5,
+    "passed_tests": 0,
+    "success_rate": 0.0,
+    "critical_ok": false,
+    "models_available": []
+  }
+}
