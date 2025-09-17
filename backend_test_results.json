@@ -1,0 +1,73 @@
+{
+  "total_tests": 10,
+  "passed_tests": 2,
+  "success_rate": 20.0,
+  "critical_failures": [
+    "Health Check",
+    "Fraud Info",
+    "Dataset Info"
+  ],
+  "available_models": [],
+  "detailed_results": {
+    "Health Check": {
+      "success": false,
+      "message": "Connection error: HTTPSConnectionPool(host='transact-shield.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2025-09-17T04:15:12.579393",
+      "response_data": null
+    },
+    "Fraud Info": {
+      "success": false,
+      "message": "Error: HTTPSConnectionPool(host='transact-shield.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2025-09-17T04:15:22.667892",
+      "response_data": null
+    },
+    "Dataset Info": {
+      "success": false,
+      "message": "Error: HTTPSConnectionPool(host='transact-shield.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2025-09-17T04:15:32.760947",
+      "response_data": null
+    },
+    "Model Status": {
+      "success": false,
+      "message": "Error: HTTPSConnectionPool(host='transact-shield.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2025-09-17T04:15:42.874872",
+      "response_data": null
+    },
+    "Model Training": {
+      "success": false,
+      "message": "Error: HTTPSConnectionPool(host='transact-shield.preview.emergentagent.com', port=443): Read timed out. (read timeout=10)",
+      "timestamp": "2025-09-17T04:15:52.978095",
+      "response_data": null
+    },
+    "Single Prediction": {
+      "success": false,
+      "message": "No models available for testing",
+      "timestamp": "2025-09-17T04:15:54.978238",
+      "response_data": null
+    },
+    "Batch Prediction": {
+      "success": false,
+      "message": "No models available for testing",
+      "timestamp": "2025-09-17T04:15:54.978288",
+      "response_data": null
+    },
+    "CSV Upload": {
+      "success": false,
+      "message": "No models available for testing",
+      "timestamp": "2025-09-17T04:15:54.978298",
+      "response_data": null
+    },
+    "Model Metrics": {
+      "success": true,
+      "message": "No models available - expected behavior",
+      "timestamp": "2025-09-17T04:15:54.978306",
+      "response_data": null
+    },
+    "Feature Importance": {
+      "success": true,
+      "message": "No models available - expected behavior",
+      "timestamp": "2025-09-17T04:15:54.978311",
+      "response_data": null
+    }
+  }
+}
