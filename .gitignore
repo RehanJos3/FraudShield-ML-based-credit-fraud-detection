@@ -79,3 +79,7 @@ agenthub/agents/youtube/db
 # Mobile development
 android-sdk/ data/creditcard.csv
 data/creditcard.csv
+-e 
+# Environment files
+*.env
+*.env.*
