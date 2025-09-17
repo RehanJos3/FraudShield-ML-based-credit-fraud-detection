@@ -11,7 +11,7 @@ import io
 import os
 from datetime import datetime
 import uuid
-from .ml_models import FraudDetectionModel
+from ml_models import FraudDetectionModel
 
 # Initialize router
 fraud_router = APIRouter(prefix="/fraud", tags=["fraud-detection"])
