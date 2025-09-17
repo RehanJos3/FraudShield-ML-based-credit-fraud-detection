@@ -1,31 +1,100 @@
 {
   "basic_results": {
     "health": {
-      "success": false,
-      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+      "success": true,
+      "data": {
+        "status": "healthy",
+        "timestamp": "2025-09-17T04:20:17.704056",
+        "models_loaded": 0,
+        "dataset_available": true
+      }
     },
     "dataset": {
-      "success": false,
-      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+      "success": true,
+      "data": {
+        "total_transactions": 284807,
+        "fraud_cases": 492,
+        "normal_cases": 284315,
+        "fraud_percentage": "0.17%",
+        "features": [
+          "Time",
+          "V1",
+          "V2",
+          "V3",
+          "V4",
+          "V5",
+          "V6",
+          "V7",
+          "V8",
+          "V9",
+          "V10",
+          "V11",
+          "V12",
+          "V13",
+          "V14",
+          "V15",
+          "V16",
+          "V17",
+          "V18",
+          "V19",
+          "V20",
+          "V21",
+          "V22",
+          "V23",
+          "V24",
+          "V25",
+          "V26",
+          "V27",
+          "V28",
+          "Amount",
+          "Class"
+        ],
+        "dataset_size_mb": "97.88 MB"
+      }
     },
     "fraud_info": {
-      "success": false,
-      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+      "success": true,
+      "data": {
+        "message": "Credit Card Fraud Detection API",
+        "version": "1.0.0",
+        "available_models": [
+          "logistic_regression",
+          "random_forest",
+          "xgboost",
+          "neural_network"
+        ],
+        "features": [
+          "Real-time fraud prediction",
+          "Batch processing",
+          "Model training and retraining",
+          "Performance metrics and visualization",
+          "Feature importance analysis"
+        ]
+      }
     },
     "model_status": {
-      "success": false,
-      "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+      "success": true,
+      "data": {
+        "available_models": [],
+        "model_metrics": "No metrics available",
+        "total_models": 0
+      },
+      "models": []
     }
   },
   "training_result": {
-    "success": false,
-    "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=5)"
+    "success": true,
+    "data": {
+      "message": "Model training started in background",
+      "balance_method": "smote",
+      "estimated_time": "5-10 minutes"
+    }
   },
   "summary": {
     "total_tests": 5,
-    "passed_tests": 0,
-    "success_rate": 0.0,
-    "critical_ok": false,
+    "passed_tests": 5,
+    "success_rate": 100.0,
+    "critical_ok": true,
     "models_available": []
   }
 }
