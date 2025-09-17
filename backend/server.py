@@ -9,16 +9,25 @@ from pydantic import BaseModel, Field
 from typing import List
 import uuid
 from datetime import datetime
-from fraud_api import fraud_router
+from backend.fraud_api import fraud_router
 
 
 ROOT_DIR = Path(__file__).parent
+# Load env from backend/.env if present
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# MongoDB connection (optional for basic API functionality)
+client = None
+db = None
+try:
+    mongo_url = os.environ.get('MONGO_URL')
+    db_name = os.environ.get('DB_NAME', 'fraudshield')
+    if mongo_url:
+        client = AsyncIOMotorClient(mongo_url)
+        db = client[db_name]
+except Exception:
+    client = None
+    db = None
 
 # Create the main app without a prefix
 app = FastAPI(
@@ -56,6 +65,9 @@ async def root():
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
+    if db is None:
+        # Fallback to echo without persistence when DB is not configured
+        return StatusCheck(client_name=input.client_name)
     status_dict = input.dict()
     status_obj = StatusCheck(**status_dict)
     _ = await db.status_checks.insert_one(status_obj.dict())
@@ -63,6 +75,8 @@ async def create_status_check(input: StatusCheckCreate):
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
+    if db is None:
+        return []
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
@@ -87,4 +101,5 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    if client is not None:
+        client.close()

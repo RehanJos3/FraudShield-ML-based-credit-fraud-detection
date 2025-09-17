@@ -11,13 +11,26 @@ import io
 import os
 from datetime import datetime
 import uuid
-from ml_models import FraudDetectionModel
+from backend.ml_models import FraudDetectionModel
+import glob
+import os
 
 # Initialize router
 fraud_router = APIRouter(prefix="/fraud", tags=["fraud-detection"])
 
 # Global model instance
 ml_model = FraudDetectionModel()
+
+# Optional auto-load of latest models (disabled by default to speed startup)
+if os.environ.get("AUTOLOAD_MODELS", "0") == "1":
+    try:
+        model_files = sorted(glob.glob(f"{ml_model.model_path}/metrics_*.json"))
+        if model_files:
+            latest_metrics = model_files[-1]
+            timestamp = latest_metrics.split("metrics_")[-1].split(".json")[0]
+            ml_model.load_models(timestamp)
+    except Exception:
+        pass
 
 # Pydantic models
 class TransactionData(BaseModel):
@@ -344,8 +357,12 @@ async def get_feature_importance_plot(model_name: str, top_n: int = 15):
 async def get_dataset_info():
     """Get information about the fraud dataset"""
     try:
-        if os.path.exists("/app/data/creditcard.csv"):
-            df = pd.read_csv("/app/data/creditcard.csv")
+        data_dir = os.environ.get("DATA_DIR", "/app/data")
+        primary = os.path.join(data_dir, "creditcard.csv")
+        fallback = os.path.join(data_dir, "sample.csv")
+        dataset_path = primary if os.path.exists(primary) else fallback
+        if os.path.exists(dataset_path):
+            df = pd.read_csv(dataset_path)
             
             return {
                 "total_transactions": len(df),
@@ -353,7 +370,8 @@ async def get_dataset_info():
                 "normal_cases": int((df['Class'] == 0).sum()),
                 "fraud_percentage": f"{df['Class'].sum() / len(df) * 100:.2f}%",
                 "features": df.columns.tolist(),
-                "dataset_size_mb": f"{os.path.getsize('/app/data/creditcard.csv') / (1024*1024):.2f} MB"
+                "dataset_size_mb": f"{os.path.getsize(dataset_path) / (1024*1024):.2f} MB",
+                "dataset_file": os.path.basename(dataset_path)
             }
         else:
             raise HTTPException(status_code=404, detail="Dataset not found")
@@ -364,9 +382,12 @@ async def get_dataset_info():
 @fraud_router.get("/health")
 async def health_check():
     """Health check endpoint"""
+    data_dir = os.environ.get("DATA_DIR", "/app/data")
+    primary = os.path.join(data_dir, "creditcard.csv")
+    fallback = os.path.join(data_dir, "sample.csv")
     return {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "models_loaded": len(ml_model.models),
-        "dataset_available": os.path.exists("/app/data/creditcard.csv")
+        "dataset_available": os.path.exists(primary) or os.path.exists(fallback)
     }

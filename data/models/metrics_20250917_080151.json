@@ -1,0 +1,182 @@
+{
+  "logistic_regression": {
+    "model_name": "Logistic Regression",
+    "accuracy": 0.927,
+    "precision": 0.04054054054054054,
+    "recall": 0.6,
+    "f1_score": 0.0759493670886076,
+    "roc_auc": 0.8526633165829146,
+    "confusion_matrix": [
+      [
+        924,
+        71
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.9978401727861771,
+        "recall": 0.928643216080402,
+        "f1-score": 0.9619989588755856,
+        "support": 995.0
+      },
+      "1": {
+        "precision": 0.04054054054054054,
+        "recall": 0.6,
+        "f1-score": 0.0759493670886076,
+        "support": 5.0
+      },
+      "accuracy": 0.927,
+      "macro avg": {
+        "precision": 0.5191903566633588,
+        "recall": 0.764321608040201,
+        "f1-score": 0.5189741629820966,
+        "support": 1000.0
+      },
+      "weighted avg": {
+        "precision": 0.993053674624949,
+        "recall": 0.927,
+        "f1-score": 0.9575687109166507,
+        "support": 1000.0
+      }
+    }
+  },
+  "random_forest": {
+    "model_name": "Random Forest",
+    "accuracy": 0.99,
+    "precision": 0.2222222222222222,
+    "recall": 0.4,
+    "f1_score": 0.2857142857142857,
+    "roc_auc": 0.963819095477387,
+    "confusion_matrix": [
+      [
+        988,
+        7
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.9969727547931383,
+        "recall": 0.992964824120603,
+        "f1-score": 0.9949647532729103,
+        "support": 995.0
+      },
+      "1": {
+        "precision": 0.2222222222222222,
+        "recall": 0.4,
+        "f1-score": 0.2857142857142857,
+        "support": 5.0
+      },
+      "accuracy": 0.99,
+      "macro avg": {
+        "precision": 0.6095974885076803,
+        "recall": 0.6964824120603015,
+        "f1-score": 0.640339519493598,
+        "support": 1000.0
+      },
+      "weighted avg": {
+        "precision": 0.9930990021302837,
+        "recall": 0.99,
+        "f1-score": 0.9914185009351172,
+        "support": 1000.0
+      }
+    }
+  },
+  "xgboost": {
+    "model_name": "XGBoost",
+    "accuracy": 0.991,
+    "precision": 0.3,
+    "recall": 0.6,
+    "f1_score": 0.4,
+    "roc_auc": 0.9949748743718593,
+    "confusion_matrix": [
+      [
+        988,
+        7
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.997979797979798,
+        "recall": 0.992964824120603,
+        "f1-score": 0.9954659949622167,
+        "support": 995.0
+      },
+      "1": {
+        "precision": 0.3,
+        "recall": 0.6,
+        "f1-score": 0.4,
+        "support": 5.0
+      },
+      "accuracy": 0.991,
+      "macro avg": {
+        "precision": 0.648989898989899,
+        "recall": 0.7964824120603016,
+        "f1-score": 0.6977329974811084,
+        "support": 1000.0
+      },
+      "weighted avg": {
+        "precision": 0.9944898989898989,
+        "recall": 0.991,
+        "f1-score": 0.9924886649874056,
+        "support": 1000.0
+      }
+    }
+  },
+  "neural_network": {
+    "model_name": "Neural Network",
+    "accuracy": 0.995,
+    "precision": 0.5,
+    "recall": 0.4,
+    "f1_score": 0.4444444444444444,
+    "roc_auc": 0.9716582914572864,
+    "confusion_matrix": [
+      [
+        993,
+        2
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.9969879518072289,
+        "recall": 0.9979899497487437,
+        "f1-score": 0.9974886991461577,
+        "support": 995.0
+      },
+      "1": {
+        "precision": 0.5,
+        "recall": 0.4,
+        "f1-score": 0.4444444444444444,
+        "support": 5.0
+      },
+      "accuracy": 0.995,
+      "macro avg": {
+        "precision": 0.7484939759036144,
+        "recall": 0.6989949748743718,
+        "f1-score": 0.7209665717953011,
+        "support": 1000.0
+      },
+      "weighted avg": {
+        "precision": 0.9945030120481928,
+        "recall": 0.995,
+        "f1-score": 0.994723477872649,
+        "support": 1000.0
+      }
+    }
+  }
+}

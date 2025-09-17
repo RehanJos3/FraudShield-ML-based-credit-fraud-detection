@@ -24,8 +24,8 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const [datasetResponse, modelsResponse] = await Promise.all([
-        axios.get(`${BACKEND_URL}/api/fraud/dataset/info`),
-        axios.get(`${BACKEND_URL}/api/fraud/models/status`)
+        axios.get(`${BACKEND_URL}/api/fraud/dataset/info`).catch(() => ({ data: null })),
+        axios.get(`${BACKEND_URL}/api/fraud/models/status`).catch(() => ({ data: { available_models: [], total_models: 0 } }))
       ]);
 
       setDatasetInfo(datasetResponse.data);

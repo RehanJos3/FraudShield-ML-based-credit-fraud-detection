@@ -22,6 +22,7 @@ from datetime import datetime
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.utils import PlotlyJSONEncoder
+from sklearn.datasets import make_classification
 
 class FraudDetectionModel:
     def __init__(self):
@@ -29,16 +30,53 @@ class FraudDetectionModel:
         self.scalers = {}
         self.metrics = {}
         self.feature_names = None
-        self.model_path = "/app/data/models"
+        data_dir = os.environ.get("DATA_DIR", "/app/data")
+        self.model_path = f"{data_dir}/models"
         self.ensure_model_directory()
+        self.data_dir = os.environ.get("DATA_DIR", "/app/data")
         
     def ensure_model_directory(self):
         """Create model directory if it doesn't exist"""
         os.makedirs(self.model_path, exist_ok=True)
         
-    def load_and_preprocess_data(self, file_path="/app/data/creditcard.csv"):
+    def ensure_dataset_exists(self):
+        """Ensure creditcard.csv exists; if missing, create a small synthetic dataset compatible with the pipeline."""
+        data_dir = self.data_dir
+        os.makedirs(data_dir, exist_ok=True)
+        csv_path = os.path.join(data_dir, "creditcard.csv")
+        if os.path.exists(csv_path):
+            return csv_path
+
+        # Generate synthetic dataset with severe class imbalance
+        num_samples = 5000
+        num_features = 30  # Time + V1..V28 + Amount = 30
+        X, y = make_classification(
+            n_samples=num_samples,
+            n_features=num_features,
+            n_informative=10,
+            n_redundant=5,
+            n_clusters_per_class=2,
+            weights=[0.995, 0.005],
+            flip_y=0.0,
+            random_state=42,
+        )
+
+        # Build DataFrame with expected column names
+        columns = [f"V{i}" for i in range(1, 29)]
+        df = pd.DataFrame(X[:, 1:29], columns=columns)
+        df.insert(0, "Time", X[:, 0])
+        df["Amount"] = X[:, -1] * 100 + 100  # positive-ish amounts
+        df["Class"] = y.astype(int)
+
+        df.to_csv(csv_path, index=False)
+        return csv_path
+
+    def load_and_preprocess_data(self, file_path=None):
         """Load and preprocess the credit card fraud dataset"""
         print("Loading dataset...")
+        if file_path is None:
+            primary = self.ensure_dataset_exists()
+            file_path = primary
         df = pd.read_csv(file_path)
         
         # Basic data info
