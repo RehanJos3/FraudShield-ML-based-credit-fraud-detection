@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from typing import List
 import uuid
 from datetime import datetime
+from fraud_api import fraud_router
 
 
 ROOT_DIR = Path(__file__).parent
@@ -20,7 +21,11 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
-app = FastAPI()
+app = FastAPI(
+    title="Credit Card Fraud Detection API",
+    description="Production-ready fraud detection system with machine learning",
+    version="1.0.0"
+)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -38,7 +43,16 @@ class StatusCheckCreate(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {
+        "message": "Credit Card Fraud Detection API",
+        "version": "1.0.0",
+        "status": "running",
+        "endpoints": {
+            "fraud_detection": "/api/fraud/",
+            "health_check": "/api/fraud/health",
+            "dataset_info": "/api/fraud/dataset/info"
+        }
+    }
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -52,8 +66,9 @@ async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
-# Include the router in the main app
+# Include routers in the main app
 app.include_router(api_router)
+app.include_router(fraud_router, prefix="/api")
 
 app.add_middleware(
     CORSMiddleware,
